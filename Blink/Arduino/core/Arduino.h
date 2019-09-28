@@ -32,15 +32,9 @@ extern "C"{
 #define SERIAL  0x0
 #define DISPLAY 0x1
 
-enum BitOrder {  /*compatible with arduino sam huaweiwx@sina.com 2018.1.12*/
-	LSBFIRST = 0,
-	MSBFIRST = 1
-};
-
 #define CHANGE 1
 #define FALLING 2
 #define RISING 3
-
 
 #define min(a,b) ((a)<(b)?(a):(b))
 #define max(a,b) ((a)>(b)?(a):(b))
@@ -66,130 +60,28 @@ enum BitOrder {  /*compatible with arduino sam huaweiwx@sina.com 2018.1.12*/
 #define bitClear(value, bit) ((value) &= ~(1UL << (bit)))
 #define bitWrite(value, bit, bitvalue) (bitvalue ? bitSet(value, bit) : bitClear(value, bit))
 
-// avr-libc defines _NOP() since 1.6.2
-#ifndef _NOP
-# define _NOP() do { __asm__ volatile ("nop"); } while (0)
-#endif
+#define bit(b) (1UL << (b))
+
+#define delay(a) 	HAL_Delay(a)
+#define millis		HAL_GetTick
+
+enum BitOrder {  /*compatible with arduino sam huaweiwx@sina.com 2018.1.12*/
+	LSBFIRST = 0,
+	MSBFIRST = 1
+};
 
 typedef unsigned int word;
-
-#define bit(b) (1UL << (b))
 
 typedef bool boolean;
 typedef uint8_t byte;
 
-void init(void);
-void initVariant(void);
-
-#define delay(a) HAL_Delay(a)
-
-//int atexit(void (*func)()) __weak;
-
-//void digitalWrite(uint8_t, uint8_t);
-//int digitalRead(uint8_t);
-int analogRead(uint8_t);
-void analogReadResolution(int resolution);
-
-#define analogReference(x)  /*huaweiwx@sina.com 2018.9*/
-//void analogReference(uint8_t mode);
-
-void analogWrite(uint8_t, int);
-void analogWriteResolution(int bits);
-uint8_t getAnalogWriteResolution(void);
-
-void setPwmFrequency(uint32_t freqHz);/*add huaweiwx@sina.com 2018.8.2*/
-uint32_t getPwmFrequency(void); /*add huaweiwx@sina.com 2018.8.2*/
-void pwmWrite(uint8_t pin, int dutyCycle16Bits, int frequency, int durationMillis);
-
-//unsigned long millis(void);
-//unsigned long micros(void);
-//void delay(unsigned long);
-//void delayMicroseconds(uint32_t us);
-
-uint32_t shiftIn( uint32_t ulDataPin, uint32_t ulClockPin, uint32_t ulBitOrder ); //add by huaweiwx@sina.com
-void shiftOut( uint32_t ulDataPin, uint32_t ulClockPin, uint32_t ulBitOrder, uint8_t ucVal ); //add by huaweiwx@sina.com
-
-//void attachInterrupt(uint8_t, void (*)(void), int mode);
-//void detachInterrupt(uint8_t);
-
 void setup(void);
 void loop(void);
 
-// Get the bit location within the hardware port of the given virtual pin.
-// This comes from the pins_*.c file for the active board configuration.
-
-//#define analogInPinToBit(P) (P)
-//#define digitalPinToPort(P) ( variant_pin_list[P].port )
-//#define digitalPinToBitMask(P) ( variant_pin_list[P].pinMask )
-//#define portOutputRegister(P) ( &(P->ODR) )
-//#define portInputRegister(P) ( &(P->IDR) )
-//#define IS_ARDUINO_PIN(PIN)  ((PIN) < NUM_DIGITAL_PINS)
-//// #define digitalPinToTimer(P) ( pgm_read_byte( digital_pin_to_timer_PGM + (P) ) )
-//// #define analogInPinToBit(P) (P)
-//// #define portInputRegister(P) ( (volatile uint8_t *)( pgm_read_word( port_to_input_PGM + (P))) )
-//// #define portModeRegister(P) ( (volatile uint8_t *)( pgm_read_word( port_to_mode_PGM + (P))) )
-
-//#define NOT_A_PIN 0
-//#define NOT_A_PORT 0
-
-//#define NOT_AN_INTERRUPT -1
 
 #ifdef __cplusplus
 } // extern "C"
 #endif
-
-//#ifdef __cplusplus
-//#include "WCharacter.h"
-
-//#if defined(HAVE_HWSERIAL0) && defined(HAVE_CDCSERIAL)
-//# error "Targets with both UART0 and CDC serial not supported"
-//#endif
-
-//uint16_t makeWord(uint16_t w);
-//uint16_t makeWord(byte h, byte l);
-
-//#define word(...) makeWord(__VA_ARGS__)
-
-////unsigned long pulseIn(uint32_t pin, uint32_t state, unsigned long timeout = 1000000L);
-////unsigned long pulseInLong(uint32_t pin, uint32_t state, unsigned long timeout = 1000000L);
-
-//extern "C" void tone(uint8_t pin, unsigned int frequency, unsigned long duration = 0);
-//extern "C" void noTone(uint8_t pin);
-
-//// WMath prototypes
-//long random(long);
-//long random(long, long);
-//void randomSeed(unsigned long);
-//long map(long, long, long, long, long);
-
-//#endif
-
-//#include "stm32_clock.h"
-//#include "stm32_gpio.h"
-//#include "wiring_pulse.h"  /*copy from Arduino_core_STM32 huaweiwx@sina.com 2017.11*/
-//#include "stm32_debug.h"
-
-
-//#ifdef __cplusplus
-
-//#include "HardwareSerial.h"
-//#include <SerialUSB.h>
-//#include <STM32System.h>
-
-///*C++ including option*/
-//#if USE_ARDUINOSTREAMING
-//#  include <Streaming.h>
-//#endif
-
-//#ifndef Serial /*cal overload by HAL_Config.h*/
-//# if defined(MENU_SERIAL)
-//#   define Serial MENU_SERIAL
-//# elif defined(MENU_SERIAL_AUTO)
-//#   define Serial MENU_SERIAL_AUTO
-//# endif
-//#endif
-
-//#endif
 
 
 #endif

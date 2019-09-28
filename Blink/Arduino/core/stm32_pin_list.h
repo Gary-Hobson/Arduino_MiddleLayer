@@ -3,9 +3,7 @@
 
 #include "variant.h"
 
-
 #define PIN_LIST CHIP_PIN_LIST
-
 
 #define PIN(a, b) __P##a##b
 enum {
