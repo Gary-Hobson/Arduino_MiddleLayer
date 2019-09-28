@@ -55,7 +55,7 @@
           <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
-          <ListingPath></ListingPath>
+          <ListingPath>.\Blink\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
@@ -173,7 +173,7 @@
             <AdsLven>1</AdsLven>
             <AdsLsxf>1</AdsLsxf>
             <RvctClst>0</RvctClst>
-            <GenPPlst>0</GenPPlst>
+            <GenPPlst>1</GenPPlst>
             <AdsCpuType>"Cortex-M7"</AdsCpuType>
             <RvctDeviceName></RvctDeviceName>
             <mOS>0</mOS>
@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32H743xx,USE_HAL_DRIVER,STM32H743xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;../Drivers/STM32H7xx_HAL_Driver/Inc;../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32H7xx/Include;../Drivers/CMSIS/Include;..\Arduino</IncludePath>
+              <IncludePath>../Inc;../Drivers/STM32H7xx_HAL_Driver/Inc;../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32H7xx/Include;../Drivers/CMSIS/Include;..\Arduino\core;..\Arduino\Variant</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -416,6 +416,11 @@
               <FileName>stm32h7xx_hal_msp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Src/stm32h7xx_hal_msp.c</FilePath>
+            </File>
+            <File>
+              <FileName>Blink.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\Arduino\Blink.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -530,24 +535,22 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>ARDUINO</GroupName>
+          <GroupName>Arduino/core</GroupName>
           <Files>
             <File>
-              <FileName>Arduino.c</FileName>
+              <FileName>stm32_pin_list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Arduino\Arduino.c</FilePath>
-            </File>
-            <File>
-              <FileName>Blink.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\Blink.cpp</FilePath>
+              <FilePath>..\Arduino\core\stm32_pin_list.c</FilePath>
             </File>
             <File>
               <FileName>stm32_gpio.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\Arduino\stm32_gpio.cpp</FilePath>
+              <FilePath>..\Arduino\core\stm32_gpio.cpp</FilePath>
             </File>
           </Files>
+        </Group>
+        <Group>
+          <GroupName>Arduino/Variant</GroupName>
         </Group>
         <Group>
           <GroupName>::CMSIS</GroupName>

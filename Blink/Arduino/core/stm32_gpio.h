@@ -1,44 +1,25 @@
-/*
-  Copyright (c) 2017 Daniel Fekete
-  add avr emulation and gpio fastIO 2017 huaweiwx@sina.com
-
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files (the "Software"), to deal
-  in the Software without restriction, including without limitation the rights
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-  copies of the Software, and to permit persons to whom the Software is
-  furnished to do so, subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be included in all
-  copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  SOFTWARE.
-*/
-
 #ifndef STM32_GPIO_H
 #define STM32_GPIO_H
 
-#define INPUT 0x0
-#define OUTPUT 0x1
-#define INPUT_PULLUP 0x2
-#define INPUT_PULLDOWN 0x3
+#include "Arduino.h"
+#include "stm32_pin_list.h"
 
-#define ANALOG 0x04
+#define DIRECTION_MODE 	(0x000000FFU)
+#define PULL_MODE 			(0x00000F00U)
 
-#define OUTPUT_PP 0x1    /* as OUTPUT add by huaweiwx@sina.com 2017.6.9   */
-#define OUTPUT_OD 0x11   /*!< Output Open Drain Mode  add by huaweiwx@sina.com 2017.6.9   */
+#define INPUT 					(0x00000000U) 
+#define OUTPUT 					(0x00000001U) 
+#define INPUT_PULLUP 		(0x00000100U) 
+#define INPUT_PULLDOWN	(0x00000200U)  	
 
-//#ifndef GPIO_SPEED_FREQ_VERY_HIGH
-//#define GPIO_SPEED_FREQ_VERY_HIGH GPIO_SPEED_FREQ_HIGH
-//#endif
+#define ANALOG					(0x00000003U) 
 
-// #define RwReg  uint32_t
+#define OUTPUT_PP 			(0x00000002U)    /* as OUTPUT add by huaweiwx@sina.com 2017.6.9   */
+#define OUTPUT_OD 			(0x00000012U)    /*!< Output Open Drain Mode  add by huaweiwx@sina.com 2017.6.9   */
+
+#ifndef GPIO_SPEED_FREQ_VERY_HIGH
+#define GPIO_SPEED_FREQ_VERY_HIGH GPIO_SPEED_FREQ_HIGH
+#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -49,25 +30,18 @@ typedef struct {
   uint32_t pinMask;
 } stm32_port_pin_type;
 
-
-
-
-enum {
-  PIN_LIST,
-  NUM_DIGITAL_PINS,
-};
-
-
 extern const stm32_port_pin_type variant_pin_list[NUM_DIGITAL_PINS];
 
-//inline GPIO_TypeDef* pinToPort(uint8_t pin) {
-//  return variant_pin_list[pin].port; /* equal_to digitalPinToPort(pin)*/
-//}
-//inline uint32_t pinToBitMask(uint8_t pin) {
-//  return variant_pin_list[pin].pinMask; /* equal_to digitalPinToBitMask(pin)*/
-//}
+inline GPIO_TypeDef* pinToPort(uint8_t pin) {
+  return variant_pin_list[pin].port; /* equal_to digitalPinToPort(pin)*/
+}
+
+inline uint32_t pinToBitMask(uint8_t pin) {
+  return variant_pin_list[pin].pinMask; /* equal_to digitalPinToBitMask(pin)*/
+}
 
 
+void pinMode(uint32_t, uint32_t);
 /**
    Start clock for the fedined port
 */
@@ -82,42 +56,30 @@ extern const stm32_port_pin_type variant_pin_list[NUM_DIGITAL_PINS];
 //extern void attachInterrupt(uint8_t, void (*)(void), int mode);
 //extern void detachInterrupt(uint8_t);
 
-//inline void digitalWriteHigh(uint8_t pin) {
-//  //    if (pin >= sizeof(variant_pin_list) / sizeof(variant_pin_list[0])) {
-//  //        return;
-//  //    }
-//  stm32_port_pin_type port_pin = variant_pin_list[pin];
-//  HAL_GPIO_WritePin(port_pin.port, port_pin.pinMask, GPIO_PIN_SET);
-//}
-//inline void digitalWriteLow(uint8_t pin) {
-//  //    if (pin >= sizeof(variant_pin_list) / sizeof(variant_pin_list[0])) {
-//  //        return;
-//  //    }
-//  stm32_port_pin_type port_pin = variant_pin_list[pin];
-//  HAL_GPIO_WritePin(port_pin.port, port_pin.pinMask, GPIO_PIN_RESET);
-//}
+inline void digitalWriteHigh(uint8_t pin) {
+  stm32_port_pin_type port_pin = variant_pin_list[pin];
+  HAL_GPIO_WritePin(port_pin.port, port_pin.pinMask, GPIO_PIN_SET);
+}
 
-//inline void digitalWrite(uint8_t pin, uint8_t value) {
-//  //    if (pin >= sizeof(variant_pin_list) / sizeof(variant_pin_list[0])) {
-//  //        return;
-//  //    }
-//  stm32_port_pin_type port_pin = variant_pin_list[pin];
-//  HAL_GPIO_WritePin(port_pin.port, port_pin.pinMask, value ? GPIO_PIN_SET : GPIO_PIN_RESET);
-//}
+inline void digitalWriteLow(uint8_t pin) {
+  stm32_port_pin_type port_pin = variant_pin_list[pin];
+  HAL_GPIO_WritePin(port_pin.port, port_pin.pinMask, GPIO_PIN_RESET);
+}
 
-//inline int digitalRead(uint8_t pin) {
-//  //    if (pin >= sizeof(variant_pin_list) / sizeof(variant_pin_list[0])) {
-//  //        return 0;
-//  //    }
+inline void digitalWrite(uint8_t pin, uint8_t value) {
+  stm32_port_pin_type port_pin = variant_pin_list[pin];
+  HAL_GPIO_WritePin(port_pin.port, port_pin.pinMask, value ? GPIO_PIN_SET : GPIO_PIN_RESET);
+}
 
-//  stm32_port_pin_type port_pin = variant_pin_list[pin];
-//  return HAL_GPIO_ReadPin(port_pin.port, port_pin.pinMask);
-//}
+inline void digitalToggle(uint8_t pin) {
+  stm32_port_pin_type port_pin = variant_pin_list[pin];
+  HAL_GPIO_TogglePin(port_pin.port, port_pin.pinMask);
+}
 
-//inline void digitalToggle(uint8_t pin) {
-//  stm32_port_pin_type port_pin = variant_pin_list[pin];
-//  HAL_GPIO_TogglePin(port_pin.port, port_pin.pinMask);
-//}
+inline int digitalRead(uint8_t pin) {
+  stm32_port_pin_type port_pin = variant_pin_list[pin];
+  return HAL_GPIO_ReadPin(port_pin.port, port_pin.pinMask);
+}
 
 #ifdef __cplusplus
 }
