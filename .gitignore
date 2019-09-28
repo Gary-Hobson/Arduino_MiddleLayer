@@ -7,9 +7,13 @@
 #编译文件
 *.d
 *.o
+*.i
 *.axf
 *.htm
 *.html
+*.crf
+*.__i
+*.iex
 *.dep
 *.hex
 *.lnp
