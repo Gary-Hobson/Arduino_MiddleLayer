@@ -77,7 +77,7 @@
         <tvExpOptDlg>0</tvExpOptDlg>
         <IsCurrentTarget>1</IsCurrentTarget>
       </OPTFL>
-      <CpuCode>0</CpuCode>
+      <CpuCode>18</CpuCode>
       <DebugOpt>
         <uSim>0</uSim>
         <uTrg>1</uTrg>
@@ -599,24 +599,72 @@
     <File>
       <GroupNumber>5</GroupNumber>
       <FileNumber>28</FileNumber>
-      <FileType>1</FileType>
+      <FileType>8</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\Arduino\core\stm32_pin_list.c</PathWithFileName>
-      <FilenameWithoutPath>stm32_pin_list.c</FilenameWithoutPath>
+      <PathWithFileName>..\Arduino\core\STM32\stm32_gpio.cpp</PathWithFileName>
+      <FilenameWithoutPath>stm32_gpio.cpp</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>5</GroupNumber>
       <FileNumber>29</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\Arduino\core\STM32\stm32_pin_list.c</PathWithFileName>
+      <FilenameWithoutPath>stm32_pin_list.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>5</GroupNumber>
+      <FileNumber>30</FileNumber>
+      <FileType>8</FileType>
+      <tvExp>1</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\Arduino\core\Print.cpp</PathWithFileName>
+      <FilenameWithoutPath>Print.cpp</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>5</GroupNumber>
+      <FileNumber>31</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\Arduino\core\stm32_gpio.cpp</PathWithFileName>
-      <FilenameWithoutPath>stm32_gpio.cpp</FilenameWithoutPath>
+      <PathWithFileName>..\Arduino\core\Stream.cpp</PathWithFileName>
+      <FilenameWithoutPath>Stream.cpp</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>5</GroupNumber>
+      <FileNumber>32</FileNumber>
+      <FileType>8</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\Arduino\core\WString.cpp</PathWithFileName>
+      <FilenameWithoutPath>WString.cpp</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>5</GroupNumber>
+      <FileNumber>33</FileNumber>
+      <FileType>8</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\Arduino\core\STM32\HardwareSerial.cpp</PathWithFileName>
+      <FilenameWithoutPath>HardwareSerial.cpp</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

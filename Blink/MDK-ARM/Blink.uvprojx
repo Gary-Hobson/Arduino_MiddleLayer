@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32H743xx,USE_HAL_DRIVER,STM32H743xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;../Drivers/STM32H7xx_HAL_Driver/Inc;../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32H7xx/Include;../Drivers/CMSIS/Include;..\Arduino\core;..\Arduino\Variant</IncludePath>
+              <IncludePath>../Inc;../Drivers/STM32H7xx_HAL_Driver/Inc;../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32H7xx/Include;../Drivers/CMSIS/Include;..\Arduino\core;..\Arduino\Variant;..\Arduino\core\STM32;..\Arduino\core\avr;..\Arduino\core\util</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -538,14 +538,34 @@
           <GroupName>Arduino/core</GroupName>
           <Files>
             <File>
-              <FileName>stm32_pin_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Arduino\core\stm32_pin_list.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32_gpio.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\Arduino\core\stm32_gpio.cpp</FilePath>
+              <FilePath>..\Arduino\core\STM32\stm32_gpio.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>stm32_pin_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Arduino\core\STM32\stm32_pin_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>Print.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\Arduino\core\Print.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Stream.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\Arduino\core\Stream.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>WString.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\Arduino\core\WString.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>HardwareSerial.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\Arduino\core\STM32\HardwareSerial.cpp</FilePath>
             </File>
           </Files>
         </Group>

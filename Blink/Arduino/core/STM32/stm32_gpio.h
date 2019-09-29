@@ -1,7 +1,7 @@
 #ifndef STM32_GPIO_H
 #define STM32_GPIO_H
 
-#include "Arduino.h"
+
 #include "stm32_pin_list.h"
 
 #define DIRECTION_MODE 	(0x000000FFU)

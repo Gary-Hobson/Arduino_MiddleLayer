@@ -1,6 +1,7 @@
 #ifndef VARIANT_H
 #define VARIANT_H
 
+#include "stm32h7xx_hal.h"
   #define STM32H743xx 1
   #define CMSIS_STARTUP_ASSEMBLY "startup_stm32h743xx.s"
   #define CHIP_PERIPHERAL_INCLUDE "stm32_STM32H743ZI.h"

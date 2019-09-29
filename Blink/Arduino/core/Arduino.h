@@ -7,7 +7,9 @@
 #include <stdbool.h>
 #include <string.h>
 #include <math.h>
-#include "stm32h7xx_hal.h"
+
+
+#include "HardwareSerial.h"
 
 #include "stm32_gpio.h"
 #include "stm32_pin_list.h"

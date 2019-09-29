@@ -3,6 +3,7 @@
 void setup() {
   // initialize digital pin LED_BUILTIN as an output.
   pinMode(PB14, OUTPUT);
+	Serial.begin(115200);
 }
 
 // the loop function runs over and over again forever
