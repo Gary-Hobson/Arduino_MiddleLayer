@@ -40,7 +40,7 @@ inline uint32_t pinToBitMask(uint8_t pin) {
   return variant_pin_list[pin].pinMask; 
 }
 
-void pinMode(uint32_t, uint32_t);
+void pinMode(uint32_t pin, uint32_t mode );
 
 inline void digitalWriteHigh(uint8_t pin) {
   stm32_port_pin_type port_pin = variant_pin_list[pin];
