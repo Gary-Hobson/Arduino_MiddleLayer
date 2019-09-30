@@ -35,7 +35,7 @@ char *dtostrf (double val, signed char width, unsigned char prec, char *sout) {
 */
 
 #pragma GCC diagnostic ignored "-Wunused-value"
-
+#include "stdint.h"
 char *dtostrf (double val, signed char width, unsigned char prec, char *sout) {
   if ( sout == NULL )
   {

@@ -35,8 +35,12 @@
 */
 #include "Arduino.h"
 #include "HardwareSerial.h"
+#include "variant.h"
 
-//#include "stm32_gpio_af.h"
+
+#define CHIPUART(a, b,c) Serial##c( a##b )
+HardwareSerial CHIP_UART_LIST;
+#undef CHIPUART
 
 #if defined(USART3_6_IRQn) //f0
 #define USART3_IRQn USART3_6_IRQn
@@ -45,7 +49,7 @@
 #define USART6_IRQn USART3_6_IRQn
 #endif
 
-#pragma GCC diagnostic ignored "-Wunused-parameter"
+//#pragma GCC diagnostic ignored "-Wunused-parameter"
 /**
    Set the underlying UART instance.
 */
@@ -278,14 +282,14 @@ void HardwareSerial::begin(const uint32_t baud, uint8_t config) {
     stm32AfUARTInit(instance, NULL, 0, NULL, 0);
 
 #else
-  if ((txPin < 0xff) && (rxPin < 0xff))
-    stm32AfUARTInit(instance,
-                    variant_pin_list[rxPin].port,
-                    variant_pin_list[rxPin].pinMask,
-                    variant_pin_list[txPin].port,
-                    variant_pin_list[txPin].pinMask);
-  else
-    stm32AfUARTInit(instance, NULL, 0, NULL, 0);
+//  if ((txPin < 0xff) && (rxPin < 0xff))
+//    stm32AfUARTInit(instance,
+//                    variant_pin_list[rxPin].port,
+//                    variant_pin_list[rxPin].pinMask,
+//                    variant_pin_list[txPin].port,
+//                    variant_pin_list[txPin].pinMask);
+//  else
+//    stm32AfUARTInit(instance, NULL, 0, NULL, 0);
 #endif
 
 /*from Arduino_Core*/

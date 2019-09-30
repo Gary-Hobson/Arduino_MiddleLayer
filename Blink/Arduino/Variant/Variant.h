@@ -2,10 +2,9 @@
 #define VARIANT_H
 
 #include "stm32h7xx_hal.h"
-  #define STM32H743xx 1
-  #define CMSIS_STARTUP_ASSEMBLY "startup_stm32h743xx.s"
-  #define CHIP_PERIPHERAL_INCLUDE "stm32_STM32H743ZI.h"
-  #define CHIP_PIN_LIST \
+#define STM32H743xx 1
+
+#define CHIP_PIN_LIST \
 	PIN(A,0), PIN(A,1), PIN(A,2), PIN(A,3), PIN(A,4), PIN(A,5), PIN(A,6), PIN(A,7), \
 	PIN(A,8), PIN(A,9), PIN(A,10), PIN(A,11), PIN(A,12), PIN(A,13), PIN(A,14), PIN(A,15), \
 	PIN(B,0), PIN(B,1), PIN(B, 2), PIN(B, 3), PIN(B, 4), PIN(B, 5), PIN(B, 6), PIN(B, 7), \
@@ -21,6 +20,11 @@
 	PIN(G,0), PIN(G,1), PIN(G,2), PIN(G,3), PIN(G,4), PIN(G,5), PIN(G,6), PIN(G,7), \
 	PIN(G,8), PIN(G,9), PIN(G,10), PIN(G,11), PIN(G,12), PIN(G,13), PIN(G,14), PIN(G,15), \
 	PIN(H,0), PIN(H,1),
-
+	
+#define    CHIP_NUM_UARTS	9
+#define CHIP_UART_LIST \
+	CHIPUART( USART,1,1 ), CHIPUART( USART ,2,2 ), CHIPUART(USART,3,3),CHIPUART(USART,6,4),  \
+	CHIPUART(UART,4,5), CHIPUART(UART,5,6), CHIPUART(UART,7,7),CHIPUART(UART,8,8), \
+	CHIPUART(LPUART,1,9)
 #endif
 	

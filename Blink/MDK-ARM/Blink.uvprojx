@@ -567,6 +567,16 @@
               <FileType>8</FileType>
               <FilePath>..\Arduino\core\STM32\HardwareSerial.cpp</FilePath>
             </File>
+            <File>
+              <FileName>dtostrf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Arduino\core\avr\dtostrf.c</FilePath>
+            </File>
+            <File>
+              <FileName>itoa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Arduino\core\itoa.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
