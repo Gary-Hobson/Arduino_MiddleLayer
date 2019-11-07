@@ -8,11 +8,12 @@
 #include <string.h>
 #include <math.h>
 
-
 #include "HardwareSerial.h"
 
 #include "stm32_gpio.h"
 #include "stm32_pin_list.h"
+
+#include "main.h"
 
 /*C including option*/
 //#include "bit_constants.h"

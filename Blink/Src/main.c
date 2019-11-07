@@ -100,7 +100,6 @@ int main(void)
   while (1)
   {
 		loop();
-		HAL_UART_Transmit(&huart3,(uint8_t *)".....\r\n",7,1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
