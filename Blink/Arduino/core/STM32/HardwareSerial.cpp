@@ -37,19 +37,12 @@
 #include "HardwareSerial.h"
 #include "variant.h"
 
-
+//将所有串口实例化
 #define CHIPUART(a, b,c) Serial##c( a##b )
 HardwareSerial CHIP_UART_LIST;
 #undef CHIPUART
 
-#if defined(USART3_6_IRQn) //f0
-#define USART3_IRQn USART3_6_IRQn
-#define USART4_IRQn USART3_6_IRQn
-#define USART5_IRQn USART3_6_IRQn
-#define USART6_IRQn USART3_6_IRQn
-#endif
 
-//#pragma GCC diagnostic ignored "-Wunused-parameter"
 /**
    Set the underlying UART instance.
 */
@@ -67,321 +60,158 @@ HardwareSerial::HardwareSerial(USART_TypeDef *instance) {
 */
 
 void HardwareSerial::begin(const uint32_t baud, uint8_t config) {
-  if (txBuffer == NULL) {
-    static uint8_t tx[TX_BUFFER_SIZE];
-    static uint8_t static_tx_used = 0;
+//  if (txBuffer == NULL) {
+//    static uint8_t tx[TX_BUFFER_SIZE];
+//    static uint8_t static_tx_used = 0;
 
-    if (!static_tx_used) {
-      txBuffer = (uint8_t*)tx;
-      static_tx_used = true;
-    } else {
-      txBuffer = (uint8_t*)malloc(TX_BUFFER_SIZE);
-    }
-  }
+//    if (!static_tx_used) {
+//      txBuffer = (uint8_t*)tx;
+//      static_tx_used = true;
+//    } else {
+//      txBuffer = (uint8_t*)malloc(TX_BUFFER_SIZE);
+//    }
+//  }
 
-  if (rxBuffer == NULL) {
-    static uint8_t rx[RX_BUFFER_SIZE];
-    static uint8_t static_rx_used = 0;
+//  if (rxBuffer == NULL) {
+//    static uint8_t rx[RX_BUFFER_SIZE];
+//    static uint8_t static_rx_used = 0;
 
-    if (!static_rx_used) {
-      rxBuffer = (uint8_t*)rx;
-      static_rx_used = true;
-    } else {
-      rxBuffer = (uint8_t*)malloc(RX_BUFFER_SIZE);
-    }
-  }
+//    if (!static_rx_used) {
+//      rxBuffer = (uint8_t*)rx;
+//      static_rx_used = true;
+//    } else {
+//      rxBuffer = (uint8_t*)malloc(RX_BUFFER_SIZE);
+//    }
+//  }
 
-  if (handle == NULL) {
-    static UART_HandleTypeDef h = {};
-    static uint8_t static_handle_used = 0;
+//  if (handle == NULL) {
+//    static UART_HandleTypeDef h = {};
+//    static uint8_t static_handle_used = 0;
 
-    if (!static_handle_used) {
-      handle = &h;
-      static_handle_used = true;
-    } else {
-      handle = (UART_HandleTypeDef*)malloc(sizeof(UART_HandleTypeDef));
-    }
-  }
+//    if (!static_handle_used) {
+//      handle = &h;
+//      static_handle_used = true;
+//    } else {
+//      handle = (UART_HandleTypeDef*)malloc(sizeof(UART_HandleTypeDef));
+//    }
+//  }
 
-  handle->Instance = instance;
-
-#if defined(USART1) && (USE_SERIAL1)
-  if (handle->Instance == USART1) {
-    __HAL_RCC_USART1_FORCE_RESET();
-    __HAL_RCC_USART1_RELEASE_RESET();
-    __HAL_RCC_USART1_CLK_ENABLE();
-    HAL_NVIC_SetPriority(USART1_IRQn, USART_PRIORITY, 0);
-    HAL_NVIC_EnableIRQ(USART1_IRQn);
-  }
-#endif
-
-#if defined(USART2) && (USE_SERIAL2)
-  if (handle->Instance == USART2) {
-    __HAL_RCC_USART2_FORCE_RESET();
-    __HAL_RCC_USART2_RELEASE_RESET();
-    __HAL_RCC_USART2_CLK_ENABLE();
-    HAL_NVIC_SetPriority(USART2_IRQn, USART_PRIORITY, 0);
-    HAL_NVIC_EnableIRQ(USART2_IRQn);
-  }
-#endif
-
-#if defined(USART3) && (USE_SERIAL3)
-  if (handle->Instance == USART3) {
-    __HAL_RCC_USART3_FORCE_RESET();
-    __HAL_RCC_USART3_RELEASE_RESET();
-    __HAL_RCC_USART3_CLK_ENABLE();
-    HAL_NVIC_SetPriority(USART3_IRQn, USART_PRIORITY, 0);
-    HAL_NVIC_EnableIRQ(USART3_IRQn);
-  }
-#endif
-
-#if defined(UART4) && (USE_SERIAL4)
-  if (handle->Instance == UART4) {
-    __HAL_RCC_UART4_FORCE_RESET();
-    __HAL_RCC_UART4_RELEASE_RESET();
-    __HAL_RCC_UART4_CLK_ENABLE();
-    HAL_NVIC_SetPriority(UART4_IRQn, USART_PRIORITY, 0);
-    HAL_NVIC_EnableIRQ(UART4_IRQn);
-  }
-#endif
-#if defined(USART4) && (USE_SERIAL4)
-  if (handle->Instance == USART4) {
-    __HAL_RCC_USART4_FORCE_RESET();
-    __HAL_RCC_USART4_RELEASE_RESET();
-    __HAL_RCC_USART4_CLK_ENABLE();
-    HAL_NVIC_SetPriority(USART4_IRQn, USART_PRIORITY, 0);
-    HAL_NVIC_EnableIRQ(USART4_IRQn);
-  }
-#endif
-
-#if defined(UART5) && (USE_SERIAL5)
-  if (handle->Instance == UART5) {
-    __HAL_RCC_UART5_FORCE_RESET();
-    __HAL_RCC_UART5_RELEASE_RESET();
-    __HAL_RCC_UART5_CLK_ENABLE();
-    HAL_NVIC_SetPriority(UART5_IRQn, USART_PRIORITY, 0);
-    HAL_NVIC_EnableIRQ(UART5_IRQn);
-  }
-#endif
-#if defined(USART5) && (USE_SERIAL5)
-  if (handle->Instance == USART5) {
-    __HAL_RCC_USART5_FORCE_RESET();
-    __HAL_RCC_USART5_RELEASE_RESET();
-    __HAL_RCC_USART5_CLK_ENABLE();
-    HAL_NVIC_SetPriority(USART5_IRQn, USART_PRIORITY, 0);
-    HAL_NVIC_EnableIRQ(USART5_IRQn);
-  }
-#endif
-
-#if defined(USART6) && (USE_SERIAL6)
-  if (handle->Instance == USART6) {
-    __HAL_RCC_USART6_FORCE_RESET();
-    __HAL_RCC_USART6_RELEASE_RESET();
-    __HAL_RCC_USART6_CLK_ENABLE();
-    HAL_NVIC_SetPriority(USART6_IRQn, USART_PRIORITY, 0);
-    HAL_NVIC_EnableIRQ(USART6_IRQn);
-  }
-#endif
-#if defined(UART7) && (USE_SERIAL7)
-  if (handle->Instance == UART7) {
-    __HAL_RCC_UART7_FORCE_RESET();
-    __HAL_RCC_UART7_RELEASE_RESET();
-    __HAL_RCC_UART7_CLK_ENABLE();
-    HAL_NVIC_SetPriority(UART7_IRQn, USART_PRIORITY, 0);
-  }
-#endif
-#if defined(USART7) && (USE_SERIAL7)
-  if (handle->Instance == USART7) {
-    __HAL_RCC_USART7_FORCE_RESET();
-    __HAL_RCC_USART7_RELEASE_RESET();
-    __HAL_RCC_USART7_CLK_ENABLE();
-    HAL_NVIC_SetPriority(USART7_IRQn, USART_PRIORITY, 0);
-    HAL_NVIC_EnableIRQ(USART7_IRQn);
-  }
-#endif
-#if defined(UART8) && (USE_SERIAL8)
-  if (handle->Instance == UART8) {
-    __HAL_RCC_UART8_FORCE_RESET();
-    __HAL_RCC_UART8_RELEASE_RESET();
-    __HAL_RCC_UART8_CLK_ENABLE();
-    HAL_NVIC_SetPriority(UART8_IRQn, USART_PRIORITY, 0);
-    HAL_NVIC_EnableIRQ(UART8_IRQn);
-  }
-#endif
-#if defined(USART8) && (USE_SERIAL8)
-  if (handle->Instance == USART8) {
-    __HAL_RCC_USART8_FORCE_RESET();
-    __HAL_RCC_USART8_RELEASE_RESET();
-    __HAL_RCC_USART8_CLK_ENABLE();
-    HAL_NVIC_SetPriority(USART8_IRQn, USART_PRIORITY, 0);
-    HAL_NVIC_EnableIRQ(USART8_IRQn);
-  }
-#endif
-#if defined(UART9) && (USE_SERIAL9)
-  if (handle->Instance == UART9) {
-    __HAL_RCC_UART9_FORCE_RESET();
-    __HAL_RCC_UART9_RELEASE_RESET();
-    __HAL_RCC_UART9_CLK_ENABLE();
-    HAL_NVIC_SetPriority(UART9_IRQn, USART_PRIORITY, 0);
-    HAL_NVIC_EnableIRQ(UART9_IRQn);
-  }
-#endif
-#if defined(USART9) && (USE_SERIAL9)
-  if (handle->Instance == USART9) {
-    __HAL_RCC_USART9_FORCE_RESET();
-    __HAL_RCC_USART9_RELEASE_RESET();
-    __HAL_RCC_USART9_CLK_ENABLE();
-    HAL_NVIC_SetPriority(USART9_IRQn, USART_PRIORITY, 0);
-    HAL_NVIC_EnableIRQ(USART9_IRQn);
-  }
-#endif
-#if defined(UART10) && (USE_SERIAL10)
-  if (handle->Instance == UART10) {
-    __HAL_RCC_UART10_FORCE_RESET();
-    __HAL_RCC_UART10_RELEASE_RESET();
-    __HAL_RCC_UART10_CLK_ENABLE();
-    HAL_NVIC_SetPriority(UART10_IRQn, USART_PRIORITY, 0);
-    HAL_NVIC_EnableIRQ(UART10_IRQn);
-  }
-#endif
-#if defined(USART10) && (USE_SERIAL10)
-  if (handle->Instance == USART10) {
-    __HAL_RCC_USART10_FORCE_RESET();
-    __HAL_RCC_USART10_RELEASE_RESET();
-    __HAL_RCC_USART10_CLK_ENABLE();
-    HAL_NVIC_SetPriority(USART10_IRQn, USART_PRIORITY, 0);
-    HAL_NVIC_EnableIRQ(USART10_IRQn);
-  }
-#endif
-
-#if defined(LPUART1) && (USE_LPUART1)
-  if (handle->Instance == LPUART1) {
-    __HAL_RCC_LPUART1_FORCE_RESET();
-    __HAL_RCC_LPUART1_RELEASE_RESET();
-    __HAL_RCC_LPUART1_CLK_ENABLE();
-    HAL_NVIC_SetPriority(LPUART1_IRQn, USART_PRIORITY, 0);
-    HAL_NVIC_EnableIRQ(LPUART1_IRQn);
-
-    if ((txPin < 0xff) && (rxPin < 0xff))
-      stm32AfLPUARTInit(instance,
-                        variant_pin_list[rxPin].port,
-                        variant_pin_list[rxPin].pinMask,
-                        variant_pin_list[txPin].port,
-                        variant_pin_list[txPin].pinMask);
-    else
-      stm32AfLPUARTInit(instance, NULL, 0, NULL, 0);
-
-  }
-  else if ((txPin < 0xff) && (rxPin < 0xff))
-    stm32AfUARTInit(instance,
-                    variant_pin_list[rxPin].port,
-                    variant_pin_list[rxPin].pinMask,
-                    variant_pin_list[txPin].port,
-                    variant_pin_list[txPin].pinMask);
-  else
-    stm32AfUARTInit(instance, NULL, 0, NULL, 0);
-
-#else
-//  if ((txPin < 0xff) && (rxPin < 0xff))
-//    stm32AfUARTInit(instance,
-//                    variant_pin_list[rxPin].port,
-//                    variant_pin_list[rxPin].pinMask,
-//                    variant_pin_list[txPin].port,
-//                    variant_pin_list[txPin].pinMask);
-//  else
-//    stm32AfUARTInit(instance, NULL, 0, NULL, 0);
-#endif
-
-/*from Arduino_Core*/
-  uint32_t databits = 0;
-  _config = config;
- switch (config & 0x07) {
-    //    case 0x02:
-    //      databits = 6;
-    //      break;
-    case 0x04:
-      databits = 7;
-      break;
-    case 0x06:
-      databits = 8;
-      break;
-    default:
-      databits = 0;
-      break;
-  }
-  if ((config & 0x30) == 0x30) {
-    handle->Init.Parity = UART_PARITY_ODD;
-    databits++;
-  } else if ((config & 0x20) == 0x20) {
-    handle->Init.Parity = UART_PARITY_EVEN;
-    databits++;
-  } else {
-    handle->Init.Parity = UART_PARITY_NONE;
-  }
-  if ((config & 0x08) == 0x08) {
-    handle->Init.StopBits = UART_STOPBITS_2;
-  } else {
-    handle->Init.StopBits = UART_STOPBITS_1;
-  }
-  handle->Init.BaudRate = baud;
-  switch (databits) {
-#ifdef UART_WORDLENGTH_7B
-    case 7:
-      handle->Init.WordLength = UART_WORDLENGTH_7B;
-      break;
-#endif
-    case 8:
-      handle->Init.WordLength = UART_WORDLENGTH_8B;
-      break;
-    case 9:
-      handle->Init.WordLength = UART_WORDLENGTH_9B;
-      break;
-    default:
-      databits = 0;
-      break;
-  }
-/*from Arduino_Core*/
+//  handle->Instance = instance;
+//	
+//	#define CHIPUART(a, b,c) \
+//	(handle->Instance == a##b )?{ \
+//		__HAL_RCC_##a##b##_FORCE_RESET(); \
+//    __HAL_RCC_##a##b##_RELEASE_RESET(); \
+//    __HAL_RCC_##a##b##_CLK_ENABLE(); \
+//    HAL_NVIC_SetPriority(a##b##_IRQn, 1, 0); \
+//    HAL_NVIC_EnableIRQ(a##b##_IRQn);}:0
+//	
+//	//
+//		#pragma clang diagnostic ignored "-Wunused-value"
+//		//CHIP_UART_LIST;
+//		(handle->Instance==USART1)?{ __HAL_RCC_USART1_RELEASE_RESET();  __HAL_RCC_USART1_CLK_ENABLE(); }:0,(handle->Instance==USART2)?1:0;
+//	#undef CHIPUART
 
 
-  handle->Init.Mode = UART_MODE_TX_RX;
-  handle->Init.HwFlowCtl = UART_HWCONTROL_NONE;
+////  if((txPin < 0xff) && (rxPin < 0xff))
+////    stm32AfUARTInit(instance,
+////                    variant_pin_list[rxPin].port,
+////                    variant_pin_list[rxPin].pinMask,
+////                    variant_pin_list[txPin].port,
+////                    variant_pin_list[txPin].pinMask);
+////  else
+////    stm32AfUARTInit(instance, NULL, 0, NULL, 0);
 
-#if defined(LPUART1) && (USE_LPUART1) // && defined(STM32L4)
-  if (handle->Instance == LPUART1) {
-    handle->Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
-    handle->AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
-# if defined(USART_PRESC_PRESCALER)  /* L4R5/7 */
-    handle->Init.ClockPrescaler = UART_PRESCALER_DIV1;
-    handle->FifoMode = UART_FIFOMODE_DISABLE;
-# endif
 
-    if (handle->Init.BaudRate <= 9600) {
-# ifdef STM32L0
-      HAL_UARTEx_EnableClockStopMode(handle);
-# endif
-      HAL_UARTEx_EnableStopMode(handle);
-    } else {
-# ifdef STM32L0
-      HAL_UARTEx_DisableClockStopMode(handle);
-# endif
-      HAL_UARTEx_DisableStopMode(handle);
-    }
+///*from Arduino_Core*/
+//  uint32_t databits = 0;
+//  _config = config;
+// switch (config & 0x07) {
+//    //    case 0x02:
+//    //      databits = 6;
+//    //      break;
+//    case 0x04:
+//      databits = 7;
+//      break;
+//    case 0x06:
+//      databits = 8;
+//      break;
+//    default:
+//      databits = 0;
+//      break;
+//  }
+//  if ((config & 0x30) == 0x30) {
+//    handle->Init.Parity = UART_PARITY_ODD;
+//    databits++;
+//  } else if ((config & 0x20) == 0x20) {
+//    handle->Init.Parity = UART_PARITY_EVEN;
+//    databits++;
+//  } else {
+//    handle->Init.Parity = UART_PARITY_NONE;
+//  }
+//  if ((config & 0x08) == 0x08) {
+//    handle->Init.StopBits = UART_STOPBITS_2;
+//  } else {
+//    handle->Init.StopBits = UART_STOPBITS_1;
+//  }
+//  handle->Init.BaudRate = baud;
+//  switch (databits) {
+//#ifdef UART_WORDLENGTH_7B
+//    case 7:
+//      handle->Init.WordLength = UART_WORDLENGTH_7B;
+//      break;
+//#endif
+//    case 8:
+//      handle->Init.WordLength = UART_WORDLENGTH_8B;
+//      break;
+//    case 9:
+//      handle->Init.WordLength = UART_WORDLENGTH_9B;
+//      break;
+//    default:
+//      databits = 0;
+//      break;
+//  }
+///*from Arduino_Core*/
 
-  }
-  HAL_UART_Init(handle);
-# if defined(USART_CR1_FIFOEN) /* L4R5/7 */
-  HAL_UARTEx_SetTxFifoThreshold(handle, UART_TXFIFO_THRESHOLD_1_8);
-  HAL_UARTEx_SetRxFifoThreshold(handle, UART_RXFIFO_THRESHOLD_1_8);
-# endif
 
-#else
-  handle->Init.OverSampling = UART_OVERSAMPLING_16;
-  HAL_UART_Init(handle);
-#endif
+//  handle->Init.Mode = UART_MODE_TX_RX;
+//  handle->Init.HwFlowCtl = UART_HWCONTROL_NONE;
 
-  HAL_UART_Receive_IT(handle, &receive_buffer, 1);
+//#if defined(LPUART1) && (USE_LPUART1) // && defined(STM32L4)
+//  if (handle->Instance == LPUART1) {
+//    handle->Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
+//    handle->AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+//# if defined(USART_PRESC_PRESCALER)  /* L4R5/7 */
+//    handle->Init.ClockPrescaler = UART_PRESCALER_DIV1;
+//    handle->FifoMode = UART_FIFOMODE_DISABLE;
+//# endif
+
+//    if (handle->Init.BaudRate <= 9600) {
+//# ifdef STM32L0
+//      HAL_UARTEx_EnableClockStopMode(handle);
+//# endif
+//      HAL_UARTEx_EnableStopMode(handle);
+//    } else {
+//# ifdef STM32L0
+//      HAL_UARTEx_DisableClockStopMode(handle);
+//# endif
+//      HAL_UARTEx_DisableStopMode(handle);
+//    }
+
+//  }
+//  HAL_UART_Init(handle);
+//# if defined(USART_CR1_FIFOEN) /* L4R5/7 */
+//  HAL_UARTEx_SetTxFifoThreshold(handle, UART_TXFIFO_THRESHOLD_1_8);
+//  HAL_UARTEx_SetRxFifoThreshold(handle, UART_RXFIFO_THRESHOLD_1_8);
+//# endif
+
+//#else
+//  handle->Init.OverSampling = UART_OVERSAMPLING_16;
+//  HAL_UART_Init(handle);
+//#endif
+
+//  HAL_UART_Receive_IT(handle, &receive_buffer, 1);
 }
-
 
 #if defined(HAL_PWR_MODULE_ENABLED) && defined(UART_IT_WUF)
 extern "C" {
@@ -565,137 +395,6 @@ void HardwareSerial::setPins(uint8_t tx, uint8_t rx) {
 
 HardwareSerial *interruptUART;
 
-#ifdef USART1
-#if (USE_SERIAL1)
-extern "C" void USART1_IRQHandler(void) {
-  interruptUART = &SerialUART1;
-  HAL_UART_IRQHandler(interruptUART->handle);
-}
-HardwareSerial SerialUART1(USART1);
-#endif
-#endif
-
-#ifdef USART2
-#if (USE_SERIAL2)
-extern "C" void USART2_IRQHandler(void) {
-  interruptUART = &SerialUART2;
-  HAL_UART_IRQHandler(interruptUART->handle);
-}
-HardwareSerial SerialUART2(USART2);
-#endif
-#endif
-
-#ifdef USART3
-#if (USE_SERIAL3)
-extern "C" void USART3_IRQHandler(void) {
-  interruptUART = &SerialUART3;
-  HAL_UART_IRQHandler(interruptUART->handle);
-}
-HardwareSerial SerialUART3(USART3);
-#endif
-#endif
-
-#ifdef UART4
-#if (USE_SERIAL4)
-extern "C" void UART4_IRQHandler(void) {
-  interruptUART = &SerialUART4;
-  HAL_UART_IRQHandler(interruptUART->handle);
-}
-HardwareSerial SerialUART4(UART4);
-#endif
-#endif
-#ifdef USART4
-#if (USE_SERIAL4)
-extern "C" void USART4_IRQHandler(void) {
-  interruptUART = &SerialUART4;
-  HAL_UART_IRQHandler(interruptUART->handle);
-}
-HardwareSerial SerialUART4(USART4);
-#endif
-#endif
-
-#ifdef UART5
-#if (USE_SERIAL5)
-extern "C" void UART5_IRQHandler(void) {
-  interruptUART = &SerialUART5;
-  HAL_UART_IRQHandler(interruptUART->handle);
-}
-HardwareSerial SerialUART5(UART5);
-#endif
-#endif
-#ifdef USART5
-#if (USE_SERIAL5)
-extern "C" void USART5_IRQHandler(void) {
-  interruptUART = &SerialUART5;
-  HAL_UART_IRQHandler(interruptUART->handle);
-}
-HardwareSerial SerialUART5(USART5);
-#endif
-#endif
-
-#ifdef USART6
-#if (USE_SERIAL6)
-extern "C" void USART6_IRQHandler(void) {
-  interruptUART = &SerialUART6;
-  HAL_UART_IRQHandler(interruptUART->handle);
-}
-HardwareSerial SerialUART6(USART6);
-#endif
-#endif
-#ifdef UART7
-#if (USE_SERIAL7)
-extern "C" void UART7_IRQHandler(void) {
-  interruptUART = &SerialUART7;
-  HAL_UART_IRQHandler(interruptUART->handle);
-}
-HardwareSerial SerialUART7(UART7);
-#endif
-#endif
-#ifdef USART7
-#if (USE_SERIAL7)
-extern "C" void USART7_IRQHandler(void) {
-  interruptUART = &SerialUART7;
-  HAL_UART_IRQHandler(interruptUART->handle);
-}
-HardwareSerial SerialUART7(USART7);
-#endif
-#endif
-#ifdef UART8
-#if (USE_SERIAL8)
-extern "C" void UART8_IRQHandler(void) {
-  interruptUART = &SerialUART8;
-  HAL_UART_IRQHandler(interruptUART->handle);
-}
-HardwareSerial SerialUART8(UART8);
-#endif
-#endif
-#ifdef USART8
-#if (USE_SERIAL8)
-extern "C" void USART8_IRQHandler(void) {
-  interruptUART = &SerialUART8;
-  HAL_UART_IRQHandler(interruptUART->handle);
-}
-HardwareSerial SerialUART8(USART8);
-#endif
-#endif
-#ifdef UART9
-#if (USE_SERIAL9)
-extern "C" void UART9_IRQHandler(void) {
-  interruptUART = &SerialUART9;
-  HAL_UART_IRQHandler(interruptUART->handle);
-}
-HardwareSerial SerialUART9(UART9);
-#endif
-#endif
-#ifdef UART10
-#if (USE_SERIAL10)
-extern "C" void UART10_IRQHandler(void) {
-  interruptUART = &SerialUART10;
-  HAL_UART_IRQHandler(interruptUART->handle);
-}
-HardwareSerial SerialUART10(UART10);
-#endif
-#endif
 
 #ifdef LPUART1
 #if (USE_LPUART1)

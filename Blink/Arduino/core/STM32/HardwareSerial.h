@@ -88,7 +88,6 @@ class HardwareSerial : public Stream{
 
     __deprecated("have a new func instead: setPins(tx,rx).add by huaweiwx")
     void stm32SetRX(uint8_t rx);
-
     __deprecated("have a new func instead: setPins(tx,rx).add by huaweiwx")
     void stm32SetTX(uint8_t tx);
 
@@ -195,46 +194,11 @@ enum {
   NUM_UARTS,
 };
 #undef CHIPUART
-
-#define Serial Serial1  
+ 
 
 #define CHIPUART(a, b,c) Serial##c
 extern HardwareSerial CHIP_UART_LIST;
 #undef CHIPUART
-//extern HardwareSerial Serial1,Serial2;
-//#if  CHIP_NUM_UARTS>1
-//	extern HardwareSerial Serial1;
-//#endif
-//#if  CHIP_NUM_UARTS>2
-//	extern HardwareSerial Serial2;
-//#endif
-//#if  CHIP_NUM_UARTS>3
-//	extern HardwareSerial Serial3;
-//#endif
-//#if  CHIP_NUM_UARTS>4
-//	extern HardwareSerial Serial4;
-//#endif
-//#if  CHIP_NUM_UARTS>5
-//	extern HardwareSerial Serial5;
-//#endif
-//#if  CHIP_NUM_UARTS>6
-//	extern HardwareSerial Serial6;
-//#endif
-//#if  CHIP_NUM_UARTS>7
-//	extern HardwareSerial Serial7;
-//#endif
-//#if  CHIP_NUM_UARTS>8
-//	extern HardwareSerial Serial8;
-//#endif
-//#if  CHIP_NUM_UARTS>9
-//	extern HardwareSerial Serial9;
-//#endif
-//#if  CHIP_NUM_UARTS>10
-//	extern HardwareSerial Serial10;
-//#endif
-//#if  CHIP_NUM_UARTS>11
-//	extern HardwareSerial Serial11;
-//#endif
 
 
 #endif // _HARDWARESERIAL_H_

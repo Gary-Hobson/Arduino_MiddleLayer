@@ -91,6 +91,7 @@ int main(void)
   MX_GPIO_Init();
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
+	HAL_UART_Transmit(&huart3,(uint8_t *)">> System initialization...\r\n",29,1000);
 	setup();
   /* USER CODE END 2 */
 
@@ -99,6 +100,7 @@ int main(void)
   while (1)
   {
 		loop();
+		HAL_UART_Transmit(&huart3,(uint8_t *)".....\r\n",7,1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

@@ -1,0 +1,8 @@
+../Src/main.c -E -xc++ -std=c++11 --target=arm-arm-none-eabi -mcpu=cortex-m7 -mfpu=fpv5-d16 -mfloat-abi=hard -c
+-fno-rtti -funsigned-char -fshort-enums -fshort-wchar -fno-exceptions
+-gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../Inc -I ../Drivers/STM32H7xx_HAL_Driver/Inc -I ../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I ../Drivers/CMSIS/Include -I ../Arduino/core -I ../Arduino/Variant -I ../Arduino/core/STM32 -I ../Arduino/core/avr -I ../Arduino/core/util
+-I./RTE/_Blink
+-I"E:/Program Files/keil_V5/Packs/ARM/CMSIS/5.5.1/CMSIS/Core/Include"
+-I"E:/Program Files/keil_V5/Packs/Keil/STM32H7xx_DFP/2.3.1/Drivers/CMSIS/Device/ST/STM32H7xx/Include"
+-D__UVISION_VERSION="528" -D_RTE_ -DSTM32H743xx -DUSE_HAL_DRIVER -DSTM32H743xx -DUSE_HAL_DRIVER -DSTM32H743xx
+-o ./blink/main.i
